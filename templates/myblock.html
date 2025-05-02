@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Block</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h2>Welcome, {{ user[1] }}</h2>
+    <p>Email: {{ user[2] }}</p>
+    <p>GitHub: <a href="{{ user[4] }}">{{ user[4] }}</a></p>
+    <p>LinkedIn: <a href="{{ user[5] }}">{{ user[5] }}</a></p>
+    <p>Twitter: <a href="{{ user[6] }}">{{ user[6] }}</a></p>
+    <p>Portfolio: <a href="{{ user[7] }}">{{ user[7] }}</a></p>
+
+    <a href="/edit">Edit My Block</a>
+    </div>
+</body>
+</html>

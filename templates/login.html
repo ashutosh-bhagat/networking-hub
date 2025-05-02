@@ -1,0 +1,20 @@
+<!-- templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | LinkBlocks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Login to Your Account</h2>
+        <form method="post">
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="submit" value="Login" class="button">
+        </form>
+        <p style="text-align:center;">New user? <a href="/signup">Sign up here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Block</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+    <h2>Edit Your Block</h2>
+    <form method="POST">
+        GitHub: <input type="text" name="github" value="{{ user[4] }}"><br>
+        LinkedIn: <input type="text" name="linkedin" value="{{ user[5] }}"><br>
+        Twitter: <input type="text" name="twitter" value="{{ user[6] }}"><br>
+        Portfolio: <input type="text" name="portfolio" value="{{ user[7] }}"><br>
+        <input type="submit" value="Update">
+    </form>
+    </div>
+</body>
+</html>

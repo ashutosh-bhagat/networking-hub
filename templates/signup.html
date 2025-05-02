@@ -1,0 +1,25 @@
+<!-- templates/signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up | LinkBlocks</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h2>Create Your Profile</h2>
+        <form method="post">
+            <input type="text" name="name" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="text" name="github" placeholder="GitHub Profile URL">
+            <input type="text" name="linkedin" placeholder="LinkedIn Profile URL">
+            <input type="text" name="twitter" placeholder="Twitter Profile URL">
+            <input type="text" name="portfolio" placeholder="Portfolio URL">
+            <input type="submit" value="Sign Up" class="button">
+        </form>
+        <p style="text-align:center;">Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</html>
