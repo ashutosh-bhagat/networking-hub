@@ -1,19 +1,54 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Edit Block</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-    <h2>Edit Your Block</h2>
-    <form method="POST">
-        GitHub: <input type="text" name="github" value="{{ user[4] }}"><br>
-        LinkedIn: <input type="text" name="linkedin" value="{{ user[5] }}"><br>
-        Twitter: <input type="text" name="twitter" value="{{ user[6] }}"><br>
-        Portfolio: <input type="text" name="portfolio" value="{{ user[7] }}"><br>
-        <input type="submit" value="Update">
+{% extends "base.html" %}
+
+{% block title %}Edit Profile - Networking Hub{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+    <h1>Edit Profile</h1>
+    <form method="POST" action="{{ url_for('edit') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ user.name }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ user.email }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="github">GitHub Profile URL</label>
+            <input type="url" id="github" name="github" class="form-control" value="{{ user.github }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="linkedin">LinkedIn Profile URL</label>
+            <input type="url" id="linkedin" name="linkedin" class="form-control" value="{{ user.linkedin }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="twitter">Twitter Profile URL</label>
+            <input type="url" id="twitter" name="twitter" class="form-control" value="{{ user.twitter }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="portfolio">Portfolio URL</label>
+            <input type="url" id="portfolio" name="portfolio" class="form-control" value="{{ user.portfolio }}">
+        </div>
+        
+        <div class="form-group">
+            <label for="profile_pic">Profile Picture</label>
+            <input type="file" id="profile_pic" name="profile_pic" class="form-control" accept="image/*">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Save Changes</button>
     </form>
+    <form method="POST" action="{{ url_for('delete_account') }}" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+        <button type="submit" class="btn btn-danger" style="margin-top:1rem;">Delete Account</button>
+    </form>
+    
+    <div class="auth-links">
+        <a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

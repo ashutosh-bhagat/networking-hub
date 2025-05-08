@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Complete Your Profile - Networking Hub{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+    <h1>Complete Your Profile</h1>
+    <form method="POST" action="{{ url_for('complete_profile') }}" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="github">GitHub Profile URL</label>
+            <input type="url" id="github" name="github" class="form-control" placeholder="https://github.com/username" value="{{ user.github or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="linkedin">LinkedIn Profile URL</label>
+            <input type="url" id="linkedin" name="linkedin" class="form-control" placeholder="https://linkedin.com/in/username" value="{{ user.linkedin or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="twitter">Twitter Profile URL</label>
+            <input type="url" id="twitter" name="twitter" class="form-control" placeholder="https://twitter.com/username" value="{{ user.twitter or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="portfolio">Portfolio Website</label>
+            <input type="url" id="portfolio" name="portfolio" class="form-control" placeholder="https://your-portfolio.com" value="{{ user.portfolio or '' }}">
+        </div>
+        <div class="form-group">
+            <label for="profile_pic">Profile Picture</label>
+            <input type="file" id="profile_pic" name="profile_pic" class="form-control" accept="image/*">
+            {% if user.profile_pic %}
+                <img src="{{ url_for('static', filename=user.profile_pic) }}" alt="Current Profile Picture" style="width:80px;height:80px;border-radius:50%;margin-top:1rem;">
+            {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+    <div class="auth-links">
+        <a href="{{ url_for('dashboard') }}">Skip for now</a>
+    </div>
+</div>
+{% endblock %} 

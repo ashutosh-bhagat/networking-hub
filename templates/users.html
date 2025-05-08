@@ -1,19 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>All Users</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <h2>All Networking Blocks</h2>
-    {% for user in users %}
-    <div class="block">
-        <p><strong>{{ user[1] }}</strong> ({{ user[2] }})</p>
-        <p>GitHub: <a href="{{ user[4] }}">{{ user[4] }}</a></p>
-        <p>LinkedIn: <a href="{{ user[5] }}">{{ user[5] }}</a></p>
-        <p>Twitter: <a href="{{ user[6] }}">{{ user[6] }}</a></p>
-        <p>Portfolio: <a href="{{ user[7] }}">{{ user[7] }}</a></p>
+{% extends "base.html" %}
+
+{% block title %}Users - Networking Hub{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h1>Browse Users</h1>
+    
+    <div class="user-list">
+        {% for user in users %}
+            <div class="user-item">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else url_for('static', filename='default-avatar.png') }}" 
+                         alt="{{ user.name }}" 
+                         style="width: 50px; height: 50px; border-radius: 50%;">
+                    <div>
+                        <h3>{{ user.name }}</h3>
+                        <p style="color: var(--text-secondary);">{{ user.email }}</p>
+                    </div>
+                </div>
+                <div class="social-links">
+                    {% if user.github %}
+                        <a href="{{ user.github }}" target="_blank"><i class="fab fa-github"></i></a>
+                    {% endif %}
+                    {% if user.linkedin %}
+                        <a href="{{ user.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    {% endif %}
+                    {% if user.twitter %}
+                        <a href="{{ user.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+                    {% endif %}
+                    {% if user.portfolio %}
+                        <a href="{{ user.portfolio }}" target="_blank"><i class="fas fa-globe"></i></a>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <p>No users found.</p>
+        {% endfor %}
     </div>
-    {% endfor %}
-</body>
-</html>
+</div>
+{% endblock %}

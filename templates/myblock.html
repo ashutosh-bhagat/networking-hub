@@ -1,19 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Block</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-    <h2>Welcome, {{ user[1] }}</h2>
-    <p>Email: {{ user[2] }}</p>
-    <p>GitHub: <a href="{{ user[4] }}">{{ user[4] }}</a></p>
-    <p>LinkedIn: <a href="{{ user[5] }}">{{ user[5] }}</a></p>
-    <p>Twitter: <a href="{{ user[6] }}">{{ user[6] }}</a></p>
-    <p>Portfolio: <a href="{{ user[7] }}">{{ user[7] }}</a></p>
+{% extends "base.html" %}
 
-    <a href="/edit">Edit My Block</a>
+{% block title %}My Block - Networking Hub{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 2rem auto;">
+    <div class="profile-card">
+        <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else url_for('static', filename='default-avatar.png') }}" 
+             alt="{{ user.name }}" 
+             style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 2rem;">
+        
+        <h1>{{ user.name }}</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 2rem;">{{ user.email }}</p>
+        
+        <div class="social-links" style="justify-content: center; margin-bottom: 2rem;">
+            {% if user.github %}
+                <a href="{{ user.github }}" target="_blank" class="btn" style="background-color: var(--bg-secondary);">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+            {% endif %}
+            {% if user.linkedin %}
+                <a href="{{ user.linkedin }}" target="_blank" class="btn" style="background-color: var(--bg-secondary);">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+            {% endif %}
+            {% if user.twitter %}
+                <a href="{{ user.twitter }}" target="_blank" class="btn" style="background-color: var(--bg-secondary);">
+                    <i class="fab fa-twitter"></i> Twitter
+                </a>
+            {% endif %}
+            {% if user.portfolio %}
+                <a href="{{ user.portfolio }}" target="_blank" class="btn" style="background-color: var(--bg-secondary);">
+                    <i class="fas fa-globe"></i> Portfolio
+                </a>
+            {% endif %}
+        </div>
+        
+        <div style="margin-top: 2rem;">
+            <a href="{{ url_for('edit') }}" class="btn btn-primary">Edit Profile</a>
+            <a href="{{ url_for('dashboard') }}" class="btn" style="background-color: var(--bg-secondary); color: var(--text-primary);">Back to Dashboard</a>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock %}

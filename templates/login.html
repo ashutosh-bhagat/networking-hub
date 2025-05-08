@@ -1,20 +1,65 @@
 <!-- templates/login.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login | LinkBlocks</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <div class="container">
-        <h2>Login to Your Account</h2>
-        <form method="post">
-            <input type="email" name="email" placeholder="Email Address" required>
-            <input type="password" name="password" placeholder="Password" required>
-            <input type="submit" value="Login" class="button">
-        </form>
-        <p style="text-align:center;">New user? <a href="/signup">Sign up here</a></p>
+{% extends "base.html" %}
+
+{% block title %}Login - Networking Hub{% endblock %}
+
+{% block content %}
+<div class="auth-box">
+    <h1>Login</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" action="{{ url_for('login') }}">
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <div style="position:relative;">
+                <input type="password" id="login_password" name="password" class="form-control" required>
+                <span class="toggle-password" onclick="togglePassword('login_password', this)" style="position:absolute;right:10px;top:50%;transform:translateY(-50%);cursor:pointer;">
+                    <i class="fas fa-eye"></i>
+                </span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+
+    <div class="oauth-section">
+        <div class="oauth-divider">
+            <span>or</span>
+        </div>
+        <a href="{{ url_for('google.login') }}" class="btn btn-google">
+            <img src="{{ url_for('static', filename='google-icon.png') }}" alt="Google Icon">
+            Continue with Google
+        </a>
     </div>
-</body>
-</html>
+
+    <div class="auth-links">
+        <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+        <p><a href="{{ url_for('home') }}">Return to Home</a></p>
+    </div>
+</div>
+{% endblock %}
+
+<script>
+function togglePassword(id, el) {
+    var x = document.getElementById(id);
+    if (x.type === "password") {
+        x.type = "text";
+        el.querySelector('i').classList.remove('fa-eye');
+        el.querySelector('i').classList.add('fa-eye-slash');
+    } else {
+        x.type = "password";
+        el.querySelector('i').classList.remove('fa-eye-slash');
+        el.querySelector('i').classList.add('fa-eye');
+    }
+}
+</script>

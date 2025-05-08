@@ -1,75 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Dashboard | LinkBlocks</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+{% extends "base.html" %}
 
-        .container {
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+{% block title %}Dashboard - Networking Hub{% endblock %}
 
-        h2 {
-            margin-bottom: 30px;
-            color: #222;
-        }
-
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .button {
-            padding: 12px 28px;
-            font-size: 16px;
-            color: #fff;
-            background-color: #007bff;
-            text-decoration: none;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-        }
-
-        .button:hover {
-            background-color: #0056b3;
-        }
-
-        .logout-link {
-            font-size: 14px;
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .logout-link:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
-    <main class="container">
-        <h2>Your Dashboard</h2>
-        <div class="button-container">
-            <a href="/edit" class="button">Edit Your Block</a>
-            <a href="/users" class="button">View Others</a>
+{% block content %}
+<div class="dashboard-grid">
+    <div class="card profile-card">
+        <img src="{{ url_for('static', filename=user.profile_pic) if user.profile_pic else url_for('static', filename='default-avatar.png') }}" alt="Profile Picture">
+        <h2>{{ user.name }}</h2>
+        <p>{{ user.email }}</p>
+        <div class="social-links">
+            {% if user.github %}
+                <a href="{{ user.github }}" target="_blank"><i class="fab fa-github"></i></a>
+            {% endif %}
+            {% if user.linkedin %}
+                <a href="{{ user.linkedin }}" target="_blank"><i class="fab fa-linkedin"></i></a>
+            {% endif %}
+            {% if user.twitter %}
+                <a href="{{ user.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
+            {% endif %}
+            {% if user.portfolio %}
+                <a href="{{ user.portfolio }}" target="_blank"><i class="fas fa-globe"></i></a>
+            {% endif %}
         </div>
-        <p><a href="/logout" class="logout-link">Logout</a></p>
-    </main>
-</body>
-</html>
+        <a href="{{ url_for('edit') }}" class="btn btn-primary">Edit Profile</a>
+    </div>
+
+    <div class="card">
+        <h2>Recent Activity</h2>
+        {% if activities %}
+            <ul class="user-list">
+                {% for activity in activities %}
+                    <li class="user-item">
+                        <span>{{ activity.description }}</span>
+                        <small>{{ activity.timestamp }}</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No recent activity</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <h2>Quick Links</h2>
+        <div class="social-links">
+            <a href="{{ url_for('myblock') }}" class="btn btn-primary">View My Block</a>
+            <a href="{{ url_for('users') }}" class="btn btn-primary">Browse Users</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
